@@ -8,6 +8,8 @@ trigger:
     include:
       - refs/tags/*
 
+pool: Default # Use my own runners
+
 variables:
 
   # Azure Resource Manager connection created during pipeline creation
@@ -23,6 +25,20 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
+- stage: 
+  displayName: Set Maven Version
+  jobs:
+  - job: SetMavenVersion
+#    pool: Default
+
+    steps:
+      - task: Maven@3
+        displayName: 'Set Maven Version'
+        inputs:
+          mavenPomFile: 'pom.xml'
+          goals: 'versions:set'
+          options: '-DnewVersion=${{ env.TAG_NAME }}'
+
 - stage: Build
   displayName: Build stage
   jobs:
