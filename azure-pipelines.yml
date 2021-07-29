@@ -83,8 +83,8 @@ stages:
               options:
                 -Dtestapp.azure.subscriptionId=$(TESTAPP_AZURE_SUBSCRIPTIONID)
                 -Dtestapp.azure.auth.client=$(TESTAPP_AZURE_AUTH_CLIENT) 
-                -Dtestapp.azure.auth.tenant=$(secrets.TESTAPP_AZURE_AUTH_TENANT)
-                -Dtestapp.azure.auth.key=$(secrets.TESTAPP_AZURE_AUTH_KEY)
+                -Dtestapp.azure.auth.tenant=$(TESTAPP_AZURE_AUTH_TENANT)
+                -Dtestapp.azure.auth.key=$(TESTAPP_AZURE_AUTH_KEY)
                 -Dtestapp.azure.war.dir=$(Pipeline.Workspace)/drop/target/
                 -Dtestapp.azure.war.filesPattern=*.war
 
