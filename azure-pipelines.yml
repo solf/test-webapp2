@@ -61,9 +61,9 @@ stages:
   dependsOn: Build
   condition: succeeded()
   jobs:
-    workspace: 
-      clean: all
   - deployment: DeployLinuxWebApp
+    workspace:
+      clean: all
     displayName: Deploy Linux Web App
     environment: $(environmentName)
     pool: Default
