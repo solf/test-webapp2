@@ -58,7 +58,7 @@
 					<schemaVersion>v2</schemaVersion>
 					<subscriptionId>${testapp.azure.subscriptionId}</subscriptionId>
 					<resourceGroup>DefaultFreeResourceGroup</resourceGroup>
-					<appName>s-lv-test</appName>
+					<appName>s-lv-test2</appName>
 					<pricingTier>F1</pricingTier>
 					<region>eastus</region>
 					<runtime>
@@ -73,9 +73,9 @@
 								<!-- <includes> -->
 								<!-- <include>*.war</include> -->
 								<!-- </includes> -->
-								<directory>${project.basedir}</directory>
+								<directory>${testapp.azure.war.dir}</directory>
 								<includes>
-									<include>build-artifacts/*.war</include>
+									<include>${testapp.azure.war.filesPattern}</include>
 								</includes>
 							</resource>
 						</resources>

@@ -74,10 +74,17 @@ stages:
         deploy:
           steps:
           - script: ls -la $(Pipeline.Workspace)/drop/target/
-          - task: AzureWebApp@1
-            displayName: 'Azure Web App Deploy: s-linux-test'
+          
+          - task: Maven@3
+            displayName: 'Azure Deploy via pom.xml'
             inputs:
-              azureSubscription: $(azureSubscription)
-              appType: webAppLinux
-              appName: $(webAppName)
-              package: '$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)'
+              mavenPomFile: 'pom.xml'
+              goals: 'azure-webapp:deploy'
+              options:
+                "-Dtestapp.azure.subscriptionId=$(TESTAPP_AZURE_SUBSCRIPTIONID)" 
+                "-Dtestapp.azure.auth.client=$(TESTAPP_AZURE_AUTH_CLIENT)" 
+                "-Dtestapp.azure.auth.tenant=$(secrets.TESTAPP_AZURE_AUTH_TENANT)" 
+                "-Dtestapp.azure.auth.key=$(secrets.TESTAPP_AZURE_AUTH_KEY)"
+                "-Dtestapp.azure.war.dir=$(Pipeline.Workspace)/drop/target/"
+                "-Dtestapp.azure.war.filesPattern=*.war"                  
+
