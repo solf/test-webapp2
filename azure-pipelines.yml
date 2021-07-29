@@ -28,7 +28,7 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
-- stage: 
+- stage: SetMavenVersion
   displayName: Set Maven Version
   jobs:
   - job: SetMavenVersion
@@ -44,6 +44,8 @@ stages:
 
 - stage: Build
   displayName: Build stage
+  dependsOn: SetMavenVersion
+  condition: succeeded()
   jobs:
   - job: MavenPackageAndPublishArtifacts
     displayName: Maven Package and Publish Artifacts
