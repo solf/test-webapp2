@@ -41,12 +41,6 @@ stages:
           goals: 'versions:set'
           options: '-DnewVersion=$(tag)'
 
-  - job: MavenPackageAndPublishArtifacts
-    displayName: Maven Package and Publish Artifacts
-    pool: Default
-#    pool:
-#      vmImage: $(vmImageName)
-
     steps:
     - task: Maven@3
       displayName: 'Maven Package'
