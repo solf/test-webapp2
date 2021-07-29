@@ -9,7 +9,7 @@
 <body>
 Code load date: <%= WebAppUtil.LOAD_DATE %>
 <p>
-THIS IS V2 of test app!
+THIS IS V3 of test app!
 <p>
 Testing Application Insights 1... 2... 3...
 <%
