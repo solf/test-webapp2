@@ -34,14 +34,13 @@ stages:
   - job: SetMavenVersion
 #    pool: Default
     steps:
-      - task: Maven@3
-        displayName: 'Set Maven Version'
-        inputs:
-          mavenPomFile: 'pom.xml'
-          goals: 'versions:set'
-          options: '-DnewVersion=$(tag)'
+    - task: Maven@3
+      displayName: 'Set Maven Version'
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'versions:set'
+        options: '-DnewVersion=$(tag)'
 
-    steps:
     - task: Maven@3
       displayName: 'Maven Package'
       inputs:
