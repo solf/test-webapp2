@@ -73,6 +73,7 @@ stages:
       runOnce:
         deploy:
           steps:
+          - checkout: self
           - script: ls -la $(Pipeline.Workspace)/drop/target/
           
           - task: Maven@3
