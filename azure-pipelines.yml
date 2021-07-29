@@ -12,6 +12,9 @@ pool: Default # Use my own runners
 
 variables:
 
+  # Figure out tag name
+  tag: $[replace(variables['Build.SourceBranch'], 'refs/tags/', '')]
+
   # Azure Resource Manager connection created during pipeline creation
   azureSubscription: 'fc339607-181d-4ace-a93e-a00dde4b392c'
 
@@ -37,7 +40,7 @@ stages:
         inputs:
           mavenPomFile: 'pom.xml'
           goals: 'versions:set'
-          options: '-DnewVersion=${{ env.TAG_NAME }}'
+          options: '-DnewVersion=$(tag)'
 
 - stage: Build
   displayName: Build stage
