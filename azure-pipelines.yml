@@ -46,6 +46,10 @@ stages:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
         Contents: '**/target/*.?(war|jar)'
         TargetFolder: $(Build.ArtifactStagingDirectory)
+      
+    - task: GitHubRelease@0
+      inputs:
+        gitHubConnection: test-webapp2 github 
 
     - upload: $(Build.ArtifactStagingDirectory)
       artifact: drop
