@@ -22,7 +22,7 @@ variables:
   webAppName: 's-linux-test'
 
   # Environment name
-  environmentName: 's-linux-test'
+  environmentName: 'Test Deploy Env'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
