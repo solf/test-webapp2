@@ -90,6 +90,8 @@ stages:
     workspace:
       clean: all
     displayName: Deploy PROD Web App
+    dependsOn: DeployStagingWebApp
+    condition: succeeded()
     environment: web-prod
 #    pool: Default
 #    pool:
