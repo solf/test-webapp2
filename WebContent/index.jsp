@@ -7,6 +7,9 @@
 <title>(TEST) Application Insights Logging</title>
 </head>
 <body>
+<p>
+Code version: <%= WebAppUtil.getReleaseVersion() %>
+<p>
 Code load date: <%= WebAppUtil.LOAD_DATE %>
 <p>
 THIS IS V3 of test app!

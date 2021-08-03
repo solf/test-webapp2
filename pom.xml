@@ -11,6 +11,8 @@
 	<packaging>war</packaging>
 	
 	<properties>
+		<build.release.version>${arg.release.version}</build.release.version>
+	
 		<io.github.solf.extra2.library.version>2.0.0</io.github.solf.extra2.library.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -26,6 +28,14 @@
 	
 	<build>
 <!-- 		<finalName>${project.artifactId}</finalName> -->
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
