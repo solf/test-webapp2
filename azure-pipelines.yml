@@ -52,6 +52,8 @@ stages:
         gitHubConnection: test-webapp2 github
         action: edit
         tag: $(tag)
+        assets: '$(Build.ArtifactStagingDirectory)/**/target/*.?(war|jar)'
+        assetUploadMode: replace
 
     - upload: $(Build.ArtifactStagingDirectory)
       artifact: drop
