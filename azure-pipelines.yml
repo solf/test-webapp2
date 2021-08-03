@@ -50,12 +50,11 @@ stages:
     - upload: $(Build.ArtifactStagingDirectory)
       artifact: drop
 
-- stage: Deploy
-  displayName: Deploy stage
+- stage: Deploy Staging
+  displayName: Deploy Staging stage
   dependsOn: Build
   condition: succeeded()
   jobs:
-  
   - deployment: DeployStagingWebApp
     workspace:
       clean: all
@@ -85,13 +84,16 @@ stages:
                 -Dtestapp.azure.war.dir=$(Pipeline.Workspace)/drop/target/ 
                 -Dtestapp.azure.war.filesPattern=*.war
                 '
-  
+
+- stage: Deploy PROD
+  displayName: Deploy PROD stage
+  dependsOn: Deploy Staging
+  condition: succeeded()
+  jobs:
   - deployment: DeployPRODWebApp
     workspace:
       clean: all
     displayName: Deploy PROD Web App
-    dependsOn: DeployStagingWebApp
-    condition: succeeded()
     environment: web-prod
 #    pool: Default
 #    pool:
