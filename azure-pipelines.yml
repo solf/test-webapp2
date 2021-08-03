@@ -50,7 +50,7 @@ stages:
     - upload: $(Build.ArtifactStagingDirectory)
       artifact: drop
 
-- stage: Deploy Staging
+- stage: Deploy_Staging
   displayName: Deploy Staging stage
   dependsOn: Build
   condition: succeeded()
@@ -85,9 +85,9 @@ stages:
                 -Dtestapp.azure.war.filesPattern=*.war
                 '
 
-- stage: Deploy PROD
+- stage: Deploy_PROD
   displayName: Deploy PROD stage
-  dependsOn: Deploy Staging
+  dependsOn: Deploy_Staging
   condition: succeeded()
   jobs:
   - deployment: DeployPRODWebApp
