@@ -51,6 +51,7 @@ stages:
       inputs:
         gitHubConnection: test-webapp2 github
         action: edit
+        tag: $(tag)
 
     - upload: $(Build.ArtifactStagingDirectory)
       artifact: drop
