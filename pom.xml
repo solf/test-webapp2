@@ -68,7 +68,7 @@
 					<schemaVersion>v2</schemaVersion>
 					<subscriptionId>${testapp.azure.subscriptionId}</subscriptionId>
 					<resourceGroup>DefaultFreeResourceGroup</resourceGroup>
-					<appName>s-lv-test2</appName>
+					<appName>${testapp.azure.appName}</appName>
 					<pricingTier>F1</pricingTier>
 					<region>eastus</region>
 					<runtime>

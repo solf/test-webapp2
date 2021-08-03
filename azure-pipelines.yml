@@ -15,15 +15,6 @@ variables:
   # Figure out tag name
   tag: $[replace(variables['Build.SourceBranch'], 'refs/tags/', '')]
 
-  # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: 'fc339607-181d-4ace-a93e-a00dde4b392c'
-
-  # Web app name
-  webAppName: 's-linux-test'
-
-  # Environment name
-  environmentName: 'Test Deploy Env'
-
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
@@ -31,7 +22,7 @@ stages:
 - stage: Build
   displayName: Build stage
   jobs:
-  - job: SetMavenVersion
+  - job: BuildMavenPackage
 #    pool: Default
     steps:
     - task: Maven@3
@@ -64,12 +55,13 @@ stages:
   dependsOn: Build
   condition: succeeded()
   jobs:
-  - deployment: DeployLinuxWebApp
+  
+  - deployment: DeployStagingWebApp
     workspace:
       clean: all
-    displayName: Deploy Linux Web App
-    environment: $(environmentName)
-    pool: Default
+    displayName: Deploy Staging Web App
+    environment: web-staging
+#    pool: Default
 #    pool:
 #      vmImage: $(vmImageName)
     strategy:
@@ -89,6 +81,38 @@ stages:
                 -Dtestapp.azure.auth.client=$(TESTAPP_AZURE_AUTH_CLIENT) 
                 -Dtestapp.azure.auth.tenant=$(TESTAPP_AZURE_AUTH_TENANT) 
                 -Dtestapp.azure.auth.key=$(TESTAPP_AZURE_AUTH_KEY) 
+                -Dtestapp.azure.appName=${STAGING_TESTAPP_NAME}
                 -Dtestapp.azure.war.dir=$(Pipeline.Workspace)/drop/target/ 
                 -Dtestapp.azure.war.filesPattern=*.war
                 '
+  
+  - deployment: DeployPRODWebApp
+    workspace:
+      clean: all
+    displayName: Deploy PROD Web App
+    environment: web-prod
+#    pool: Default
+#    pool:
+#      vmImage: $(vmImageName)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: self
+          - script: ls -la $(Pipeline.Workspace)/drop/target/
+          
+          - task: Maven@3
+            displayName: 'Azure Deploy via pom.xml'
+            inputs:
+              mavenPomFile: 'pom.xml'
+              goals: 'azure-webapp:deploy'
+              options: '
+                -Dtestapp.azure.subscriptionId=$(TESTAPP_AZURE_SUBSCRIPTIONID) 
+                -Dtestapp.azure.auth.client=$(TESTAPP_AZURE_AUTH_CLIENT) 
+                -Dtestapp.azure.auth.tenant=$(TESTAPP_AZURE_AUTH_TENANT) 
+                -Dtestapp.azure.auth.key=$(TESTAPP_AZURE_AUTH_KEY) 
+                -Dtestapp.azure.appName=${PROD_TESTAPP_NAME}
+                -Dtestapp.azure.war.dir=$(Pipeline.Workspace)/drop/target/ 
+                -Dtestapp.azure.war.filesPattern=*.war
+                '
+                
