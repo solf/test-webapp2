@@ -23,6 +23,8 @@ stages:
   displayName: Build stage
   jobs:
   - job: BuildMavenPackage
+    workspace:
+      clean: all
 #    pool: Default
     steps:
     - task: Maven@3
@@ -40,23 +42,23 @@ stages:
            -Darg.release.version=$(tag)
            '
 
-    - task: CopyFiles@2
-      displayName: 'Copy Files to artifact staging directory'
-      inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)'
-        Contents: '**/target/*.?(war|jar)'
-        TargetFolder: $(Build.ArtifactStagingDirectory)
+#    - task: CopyFiles@2
+#      displayName: 'Copy Files to artifact staging directory'
+#       inputs:
+#         SourceFolder: '$(System.DefaultWorkingDirectory)'
+#         Contents: '**/target/release.properties'
+#         TargetFolder: $(Build.ArtifactStagingDirectory)
+
+    - publish: $(System.DefaultWorkingDirectory)/target/classes/release.properties
+      artifact: drop
       
     - task: GitHubRelease@0
       inputs:
         gitHubConnection: test-webapp2 github
         action: edit
         tag: $(tag)
-        assets: '$(Build.ArtifactStagingDirectory)/**/target/*.?(war|jar)'
+        assets: '$(System.DefaultWorkingDirectory)/target/*.?(war|jar)'
         assetUploadMode: replace
-
-    - upload: $(Build.ArtifactStagingDirectory)
-      artifact: drop
 
 - stage: Deploy_Staging
   displayName: Deploy Staging stage
