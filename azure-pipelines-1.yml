@@ -42,6 +42,7 @@ stages:
 #    - script: echo $(Build.ArtifactStagingDirectory)
       
     - task: DownloadGitHubRelease@0
+      condition: eq(variables['System.JobAttempt'], '1')
       inputs:
         connection: test-webapp2 github
         userRepository: solf/test-webapp2
