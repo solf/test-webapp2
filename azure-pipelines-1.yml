@@ -10,7 +10,7 @@ pool: Default # Use my own runners
 #pool:
 #  vmImage: ubuntu-latest
 
-variables:
+#variables:
 #  System.debug: true
 
 stages:
