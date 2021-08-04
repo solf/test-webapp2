@@ -24,7 +24,9 @@ stages:
 #    - publish: '$(System.DefaultWorkingDirectory)/pom.xml' 
 #      artifact: drop
     
-#    - script: echo $(Build.ArtifactStagingDirectory)
+    - script: echo $(Build.Reason)
+    - script: echo $(System.JobAttempt)
+    - script: echo $(System.StageAttempt)
       
     - task: CopyFiles@2
       inputs:
