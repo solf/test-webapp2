@@ -23,6 +23,8 @@ stages:
     steps:
     - publish: '$(System.DefaultWorkingDirectory)/pom.xml' 
       artifact: drop
+    
+    - script: echo $(Build.ArtifactStagingDirectory)
       
     - task: CopyFiles@2
       inputs:
@@ -30,9 +32,12 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
         CleanTargetFolder: true
         
+    - script: echo $(Build.ArtifactStagingDirectory)
       
     - publish: '$(Build.ArtifactStagingDirectory)/**' 
       artifact: drop
+    
+    - script: echo $(Build.ArtifactStagingDirectory)
       
     - task: DownloadGitHubRelease@0
       inputs:
