@@ -21,9 +21,8 @@ stages:
     workspace:
       clean: all
     steps:
-    - publish: 
+    - publish: '$(System.DefaultWorkingDirectory)/pom.xml' 
       artifact: drop
-      target: '$(System.DefaultWorkingDirectory)/pom.xml'
       
     - task: DownloadGitHubRelease@0
       inputs:
