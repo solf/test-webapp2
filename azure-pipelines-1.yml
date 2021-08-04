@@ -21,10 +21,10 @@ stages:
     workspace:
       clean: all
     steps:
-    - publish: '$(System.DefaultWorkingDirectory)/pom.xml' 
-      artifact: drop
+#    - publish: '$(System.DefaultWorkingDirectory)/pom.xml' 
+#      artifact: drop
     
-    - script: echo $(Build.ArtifactStagingDirectory)
+#    - script: echo $(Build.ArtifactStagingDirectory)
       
     - task: CopyFiles@2
       inputs:
@@ -32,19 +32,19 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
         CleanTargetFolder: true
         
-    - script: echo $(Build.ArtifactStagingDirectory)
+#    - script: echo $(Build.ArtifactStagingDirectory)
       
     - upload: $(Build.ArtifactStagingDirectory)
       artifact: drop
     
-    - script: echo $(Build.ArtifactStagingDirectory)
+#    - script: echo $(Build.ArtifactStagingDirectory)
       
     - task: DownloadGitHubRelease@0
       inputs:
         connection: test-webapp2 github
         userRepository: solf/test-webapp2
         defaultVersionType: specificTag
-        version: 0.7.18
+        version: 0.7.8
         itemPattern: '*.war'
         downloadPath: '$(System.ArtifactsDirectory)'
   
