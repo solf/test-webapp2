@@ -34,7 +34,7 @@ stages:
         
     - script: echo $(Build.ArtifactStagingDirectory)
       
-    - publish: '$(Build.ArtifactStagingDirectory)'' 
+    - publish: '$(Build.ArtifactStagingDirectory)' 
       artifact: drop
     
     - script: echo $(Build.ArtifactStagingDirectory)
