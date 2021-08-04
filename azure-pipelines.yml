@@ -19,7 +19,7 @@ variables:
   vmImageName: 'ubuntu-latest'
   
   # Enable debug
-  System.Debug: true
+#  System.Debug: true
 
 stages:
 - stage: Build
@@ -121,7 +121,17 @@ stages:
         deploy:
           steps:
           - checkout: self
-          - script: ls -la $(Pipeline.Workspace)/drop/target/
+          
+          - task: DownloadGitHubRelease@0
+            inputs:
+              connection: test-webapp2 github
+              userRepository: solf/test-webapp2
+              defaultVersionType: specificTag
+              version: $(tag)
+              itemPattern: '*.war'
+              downloadPath: '$(System.ArtifactsDirectory)'
+          
+          - script: ls -la $(System.ArtifactsDirectory)
           
           - task: Maven@3
             displayName: 'Azure Deploy via pom.xml'
@@ -134,7 +144,7 @@ stages:
                 -Dtestapp.azure.auth.tenant=$(TESTAPP_AZURE_AUTH_TENANT) 
                 -Dtestapp.azure.auth.key=$(TESTAPP_AZURE_AUTH_KEY) 
                 -Dtestapp.azure.appName=${LINUX_TESTAPP_NAME}
-                -Dtestapp.azure.war.dir=$(Pipeline.Workspace)/drop/target/ 
+                -Dtestapp.azure.war.dir=$(System.ArtifactsDirectory) 
                 -Dtestapp.azure.war.filesPattern=*.war
                 '
 
@@ -156,7 +166,17 @@ stages:
         deploy:
           steps:
           - checkout: self
-          - script: ls -la $(Pipeline.Workspace)/drop/target/
+          
+          - task: DownloadGitHubRelease@0
+            inputs:
+              connection: test-webapp2 github
+              userRepository: solf/test-webapp2
+              defaultVersionType: specificTag
+              version: $(tag)
+              itemPattern: '*.war'
+              downloadPath: '$(System.ArtifactsDirectory)'
+          
+          - script: ls -la $(System.ArtifactsDirectory)
           
           - task: Maven@3
             displayName: 'Azure Deploy via pom.xml'
@@ -169,6 +189,6 @@ stages:
                 -Dtestapp.azure.auth.tenant=$(TESTAPP_AZURE_AUTH_TENANT) 
                 -Dtestapp.azure.auth.key=$(TESTAPP_AZURE_AUTH_KEY) 
                 -Dtestapp.azure.appName=${PROD_TESTAPP_NAME}
-                -Dtestapp.azure.war.dir=$(Pipeline.Workspace)/drop/target/ 
+                -Dtestapp.azure.war.dir=$(System.ArtifactsDirectory) 
                 -Dtestapp.azure.war.filesPattern=*.war
                 '
