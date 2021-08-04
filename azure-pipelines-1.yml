@@ -16,6 +16,6 @@ steps:
     connection: test-webapp2 github
     userRepository: solf/test-webapp2
     defaultVersionType: specificTag
-    version: 0.7.8
+    version: 0.7.18
     itemPattern: '*.war'
     downloadPath: '$(System.ArtifactsDirectory)'
