@@ -57,15 +57,15 @@ stages:
            -Darg.release.version=$(tag)
            '
 
-    - task: CopyFiles@2
-      displayName: 'Copy Files to artifact staging directory'
-      inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)'
-        Contents: '**/target/release.properties'
-        TargetFolder: $(Build.ArtifactStagingDirectory)
-
-    - publish: '$(Build.ArtifactStagingDirectory)/**'
-      artifact: drop
+#     - task: CopyFiles@2
+#       displayName: 'Copy Files to artifact staging directory'
+#       inputs:
+#         SourceFolder: '$(System.DefaultWorkingDirectory)'
+#         Contents: '**/target/release.properties'
+#         TargetFolder: $(Build.ArtifactStagingDirectory)
+# 
+#     - publish: '$(Build.ArtifactStagingDirectory)/**'
+#       artifact: drop
       
     - task: GitHubRelease@0
       inputs:
@@ -78,7 +78,7 @@ stages:
 - stage: Deploy_Staging
   displayName: Deploy Staging stage
   dependsOn: Build
-  condition: succeededOrFailed()
+#   condition: succeededOrFailed()
   jobs:
   - deployment: DeployStagingWebApp
     workspace:
@@ -113,7 +113,7 @@ stages:
 - stage: Deploy_Linux
   displayName: Deploy Linux stage
   dependsOn: Build
-  condition: succeededOrFailed()
+#   condition: succeededOrFailed()
   jobs:
   - deployment: DeployLinuxWebApp
     workspace:
@@ -179,4 +179,3 @@ stages:
                 -Dtestapp.azure.war.dir=$(Pipeline.Workspace)/drop/target/ 
                 -Dtestapp.azure.war.filesPattern=*.war
                 '
-                
