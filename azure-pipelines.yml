@@ -22,6 +22,19 @@ stages:
 - stage: Build
   displayName: Build stage
   jobs:
+  - job: CheckReleaseExists
+    workspace:
+      clean: all
+    steps:
+    - task: DownloadGitHubRelease@0
+      inputs:
+        connection: test-webapp2 github
+        userRepository: test-webapp2
+        defaultVersionType: specificTag
+        version: $(tag)
+        itemPattern: '*.war'
+        downloadPath: '$(System.ArtifactsDirectory)'
+  
   - job: BuildMavenPackage
     workspace:
       clean: all
@@ -42,14 +55,14 @@ stages:
            -Darg.release.version=$(tag)
            '
 
-#    - task: CopyFiles@2
-#      displayName: 'Copy Files to artifact staging directory'
-#       inputs:
-#         SourceFolder: '$(System.DefaultWorkingDirectory)'
-#         Contents: '**/target/release.properties'
-#         TargetFolder: $(Build.ArtifactStagingDirectory)
+    - task: CopyFiles@2
+      displayName: 'Copy Files to artifact staging directory'
+       inputs:
+         SourceFolder: '$(System.DefaultWorkingDirectory)'
+         Contents: '**/target/release.properties'
+         TargetFolder: $(Build.ArtifactStagingDirectory)
 
-    - publish: $(System.DefaultWorkingDirectory)/target/classes/*.properties
+    - publish: '$(Build.ArtifactStagingDirectory)/**'
       artifact: drop
       
     - task: GitHubRelease@0
