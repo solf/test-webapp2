@@ -10,6 +10,9 @@ pool: Default # Use my own runners
 #pool:
 #  vmImage: ubuntu-latest
 
+variables:
+  System.debug: true
+
 stages:
 - stage: Build
   displayName: Build stage
@@ -18,6 +21,9 @@ stages:
     workspace:
       clean: all
     steps:
+    - publish: 
+      artifact: drop
+      target: $(System.DefaultWorkingDirectory)/pom.xml
     - task: DownloadGitHubRelease@0
       inputs:
         connection: test-webapp2 github
