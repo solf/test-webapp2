@@ -32,7 +32,7 @@ stages:
         connection: test-webapp2 github
         userRepository: test-webapp2
         defaultVersionType: specificTag
-        version: $(tag)
+        version: $(Build.SourceBranch)
         itemPattern: '*.war'
         downloadPath: '$(System.ArtifactsDirectory)'
   
