@@ -36,6 +36,8 @@ stages:
         downloadPath: '$(System.ArtifactsDirectory)'
   
   - job: BuildMavenPackage
+    dependsOn: CheckReleaseExists
+    condition: failed()
     workspace:
       clean: all
 #    pool: Default
