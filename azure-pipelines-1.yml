@@ -1,0 +1,21 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+#trigger:
+#- main
+
+pool: Default # Use my own runners
+#pool:
+#  vmImage: ubuntu-latest
+
+steps:
+- task: DownloadGitHubRelease@0
+  inputs:
+    connection: test-webapp2 github
+    userRepository: solf/test-webapp2
+    defaultVersionType: specificTag
+    version: 0.7.8
+    itemPattern: '*.war'
+    downloadPath: '$(System.ArtifactsDirectory)'
