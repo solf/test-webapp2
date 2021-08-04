@@ -103,15 +103,15 @@ stages:
                 -Dtestapp.azure.war.filesPattern=*.war
                 '
 
-- stage: Deploy_Linux
-  displayName: Deploy Linux stage
+- stage: Deploy_Dev
+  displayName: Deploy Dev stage
   dependsOn: Build
 #   condition: succeededOrFailed()
   jobs:
-  - deployment: DeployLinuxWebApp
+  - deployment: DeployDevWebApp
     workspace:
       clean: all
-    displayName: Deploy Linux Web App
+    displayName: Deploy Dev Web App
     environment: web-staging
 #    pool: Default
 #    pool:
@@ -143,7 +143,7 @@ stages:
                 -Dtestapp.azure.auth.client=$(TESTAPP_AZURE_AUTH_CLIENT) 
                 -Dtestapp.azure.auth.tenant=$(TESTAPP_AZURE_AUTH_TENANT) 
                 -Dtestapp.azure.auth.key=$(TESTAPP_AZURE_AUTH_KEY) 
-                -Dtestapp.azure.appName=${LINUX_TESTAPP_NAME}
+                -Dtestapp.azure.appName=${DEV_TESTAPP_NAME}
                 -Dtestapp.azure.war.dir=$(System.ArtifactsDirectory) 
                 -Dtestapp.azure.war.filesPattern=*.war
                 '
