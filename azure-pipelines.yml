@@ -49,7 +49,7 @@ stages:
 #         Contents: '**/target/release.properties'
 #         TargetFolder: $(Build.ArtifactStagingDirectory)
 
-    - publish: $(System.DefaultWorkingDirectory)/target/classes/release.properties
+    - publish: $(System.DefaultWorkingDirectory)/target/classes/*.properties
       artifact: drop
       
     - task: GitHubRelease@0
