@@ -10,12 +10,26 @@ pool: Default # Use my own runners
 #pool:
 #  vmImage: ubuntu-latest
 
-steps:
-- task: DownloadGitHubRelease@0
-  inputs:
-    connection: test-webapp2 github
-    userRepository: solf/test-webapp2
-    defaultVersionType: specificTag
-    version: 0.7.18
-    itemPattern: '*.war'
-    downloadPath: '$(System.ArtifactsDirectory)'
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:
+  - job: CheckReleaseExists
+    workspace:
+      clean: all
+    steps:
+    - task: DownloadGitHubRelease@0
+      inputs:
+        connection: test-webapp2 github
+        userRepository: solf/test-webapp2
+        defaultVersionType: specificTag
+        version: 0.7.18
+        itemPattern: '*.war'
+        downloadPath: '$(System.ArtifactsDirectory)'
+  
+  - job: BuildMavenPackage
+    dependsOn: CheckReleaseExists
+    steps:
+    - script: echo 'Hello World'
+
+    
