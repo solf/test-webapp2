@@ -32,4 +32,12 @@ stages:
     steps:
     - script: echo 'Hello World'
 
+- stage: Deploy_Staging
+  displayName: Deploy Staging stage
+  dependsOn: Build
+  jobs:
+  - job: 
+    steps:
+      - script: echo 'Hello Deploy!'
+      
     
