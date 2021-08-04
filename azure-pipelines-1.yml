@@ -24,6 +24,9 @@ stages:
     - publish: '$(System.DefaultWorkingDirectory)/pom.xml' 
       artifact: drop
       
+    - publish: '$(System.DefaultWorkingDirectory)/**pom.xml' 
+      artifact: drop
+      
     - task: DownloadGitHubRelease@0
       inputs:
         connection: test-webapp2 github
