@@ -23,6 +23,7 @@ stages:
   displayName: Build stage
   jobs:
   - job: CheckReleaseExists
+    continueOnError: true # next job starts even if this one fails
     workspace:
       clean: all
     steps:
@@ -37,7 +38,8 @@ stages:
   
   - job: BuildMavenPackage
     dependsOn: CheckReleaseExists
-    condition: failed()
+#    condition: failed()
+    condition: eq(dependencies.CheckReleaseExists.result,'SucceededWithIssues') # targets the result of the previous job 
     workspace:
       clean: all
 #    pool: Default
