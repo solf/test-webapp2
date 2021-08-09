@@ -34,20 +34,26 @@ stages:
       clean: all
 #    pool: Default
     steps:
-    - task: Maven@3
-      displayName: 'Set Maven Version'
-      inputs:
-        mavenPomFile: 'pom.xml'
-        goals: 'versions:set'
-        options: '-DnewVersion=$(tag)'
+    - script: echo $(tag)
+    - script: echo $(Build.SourceBranch)
+    - script: echo FAIL
+      condition: eq(variables['Build.SourceBranch'], variables['tag'])
 
-    - task: Maven@3
-      displayName: 'Maven Package'
-      inputs:
-        mavenPomFile: 'pom.xml'
-        options: '
-           -Darg.release.version=$(tag)
-           '
+#     steps:
+#     - task: Maven@3
+#       displayName: 'Set Maven Version'
+#       inputs:
+#         mavenPomFile: 'pom.xml'
+#         goals: 'versions:set'
+#         options: '-DnewVersion=$(tag)'
+# 
+#     - task: Maven@3
+#       displayName: 'Maven Package'
+#       inputs:
+#         mavenPomFile: 'pom.xml'
+#         options: '
+#            -Darg.release.version=$(tag)
+#            '
       
     - task: GitHubRelease@0
       condition: eq(variables['System.JobAttempt'], '1') # Only run artifact upload on 1st attempt so as to not overwrite packages on GitHub
