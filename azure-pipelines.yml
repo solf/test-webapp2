@@ -36,7 +36,8 @@ stages:
     steps:
     - script: echo $(tag)
     - script: echo $(Build.SourceBranch)
-    - script: echo FAIL
+    - script: exit 1
+      displayName: Fail execution for non-tags
       condition: eq(variables['Build.SourceBranch'], variables['tag'])
 
 #     steps:
