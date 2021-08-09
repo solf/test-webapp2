@@ -57,7 +57,8 @@ stages:
 #            '
       
     - task: GitHubRelease@0
-      condition: eq(variables['System.JobAttempt'], '1') # Only run artifact upload on 1st attempt so as to not overwrite packages on GitHub
+      # MUST include succeeded() condition, otherwise it runs if previous step fails
+      condition: and(succeeded(), eq(variables['System.JobAttempt'], '1')) # Only run artifact upload on 1st attempt so as to not overwrite packages on GitHub
       inputs:
         gitHubConnection: test-webapp2 github
         action: edit
