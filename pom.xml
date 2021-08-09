@@ -69,13 +69,13 @@
 					<subscriptionId>${testapp.azure.subscriptionId}</subscriptionId>
 					<resourceGroup>DefaultFreeResourceGroup</resourceGroup>
 					<appName>${testapp.azure.appName}</appName>
-					<pricingTier>F1</pricingTier>
-					<region>eastus</region>
-					<runtime>
-						<os>Windows</os>
-						<javaVersion>Java 11</javaVersion>
-						<webContainer>Tomcat 9.0</webContainer>
-					</runtime>
+					<!-- <pricingTier>F1</pricingTier> -->
+					<!-- <region>eastus</region> -->
+					<!-- <runtime> -->
+						<!-- <os>Windows</os> -->
+						<!-- <javaVersion>Java 11</javaVersion> -->
+						<!-- <webContainer>Tomcat 9.0</webContainer> -->
+					<!-- </runtime> -->
 					<deployment>
 						<resources>
 							<resource>
