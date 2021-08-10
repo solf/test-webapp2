@@ -42,7 +42,6 @@ stages:
 
     - script: pass check fail
 
-    steps:
     - task: Maven@3
       displayName: 'Set Maven Version'
       inputs:
