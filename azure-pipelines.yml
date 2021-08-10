@@ -42,21 +42,21 @@ stages:
 
     - script: pass check fail
 
-#     steps:
-#     - task: Maven@3
-#       displayName: 'Set Maven Version'
-#       inputs:
-#         mavenPomFile: 'pom.xml'
-#         goals: 'versions:set'
-#         options: '-DnewVersion=$(tag)'
-# 
-#     - task: Maven@3
-#       displayName: 'Maven Package'
-#       inputs:
-#         mavenPomFile: 'pom.xml'
-#         options: '
-#            -Darg.release.version=$(tag)
-#            '
+    steps:
+    - task: Maven@3
+      displayName: 'Set Maven Version'
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'versions:set'
+        options: '-DnewVersion=$(tag)'
+
+    - task: Maven@3
+      displayName: 'Maven Package'
+      inputs:
+        mavenPomFile: 'pom.xml'
+        options: '
+           -Darg.release.version=$(tag)
+           '
       
     - task: GitHubRelease@0
       # MUST include succeeded() condition, otherwise it runs if previous step fails
