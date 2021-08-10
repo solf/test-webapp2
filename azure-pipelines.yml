@@ -40,7 +40,7 @@ stages:
       displayName: Fail execution for non-tags
       condition: eq(variables['Build.SourceBranch'], variables['tag'])
 
-    - script: pass check fail
+    - script: echo pass check fail
 
     - task: Maven@3
       displayName: 'Set Maven Version'
