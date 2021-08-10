@@ -137,7 +137,7 @@ stages:
               userRepository: solf/test-webapp2
               defaultVersionType: specificTag
               version: $(tag)
-              itemPattern: '*.war'
+              itemPattern: 'test-webapp2-$(tag).war'
               downloadPath: '$(System.ArtifactsDirectory)'
           
           - script: ls -la $(System.ArtifactsDirectory)
