@@ -17,7 +17,7 @@ pool: Default # Use my own runners
 #  vmImage: ubuntu-latest
 
 variables:
--group: StagingVariables
+- group: StagingVariables
 
 stages:
 - stage: Deploy
