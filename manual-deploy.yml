@@ -24,19 +24,20 @@ variables:
 - group: StagingVariables
 
 stages:
+- stage: WelcomePlaceholder
+  jobs:
+  - job: Placeholder
+    steps:
+    - script: echo Placeholder
+    
 - stage: Deploy
   displayName: Manual Deploy
   jobs:
-  - job: DemoJob
-    workspace:
-      clean: all
-    steps:
-    - script: echo Blah
-    
   - deployment: ManualDeploy
+    displayName: Manually Deploy Web App
+    dependsOn: WelcomePlaceholder    
     workspace:
       clean: all
-    displayName: Manually Deploy Web App
     environment: web-staging
     strategy:
       runOnce:
