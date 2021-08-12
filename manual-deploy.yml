@@ -24,6 +24,7 @@ stages:
     workspace:
       clean: all
     displayName: Manually Deploy Web App
+    environment: web-staging
     strategy:
       runOnce:
         deploy:
