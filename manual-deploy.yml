@@ -1,0 +1,59 @@
+#
+# Provides a way to manually deploy packages to specified Azure apps/slots
+#
+
+parameters:
+- name: tag
+  displayName: Tag to deploy
+  type: string
+- name: azureApp
+  displayName: Azure App to deploy to
+  type: string
+
+trigger: none
+
+pool: Default # Use my own runners
+#pool:
+#  vmImage: ubuntu-latest
+
+stages:
+- stage: Deploy
+  displayName: Manual Deploy
+  jobs:
+  - deployment: ManualDeploy
+    workspace:
+      clean: all
+    displayName: Manually Deploy Web App
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: self
+          
+          - task: DownloadGitHubRelease@0
+            inputs:
+              connection: test-webapp2 github
+              userRepository: solf/test-webapp2
+              defaultVersionType: specificTag
+              version: ${{ parameters.tag }}
+              itemPattern: '*.war'
+              downloadPath: '$(System.ArtifactsDirectory)'
+          
+          - script: ls -la $(System.ArtifactsDirectory)
+          
+          - task: Maven@3
+            displayName: 'Azure Deploy via pom.xml'
+            inputs:
+              mavenPomFile: 'pom.xml'
+              goals: 'azure-webapp:deploy'
+              options: '
+                -Dtestapp.azure.subscriptionId=$(TESTAPP_AZURE_SUBSCRIPTIONID) 
+                -Dtestapp.azure.auth.client=$(TESTAPP_AZURE_AUTH_CLIENT) 
+                -Dtestapp.azure.auth.tenant=$(TESTAPP_AZURE_AUTH_TENANT) 
+                -Dtestapp.azure.auth.key=$(TESTAPP_AZURE_AUTH_KEY) 
+                -Dtestapp.azure.appName=${{ parameters.azureApp }}
+                -Dtestapp.azure.war.dir=$(System.ArtifactsDirectory) 
+                -Dtestapp.azure.war.filesPattern=*.war
+                '
+  
+  
