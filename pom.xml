@@ -90,6 +90,10 @@
 							</resource>
 						</resources>
 					</deployment>
+					<deploymentSlot>
+						<name>${testapp.azure.slotName}</name>
+						<configurationSource></configurationSource>
+					</deploymentSlot>					
 				</configuration>
 			</plugin>
 		</plugins>

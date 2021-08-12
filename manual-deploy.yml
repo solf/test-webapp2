@@ -9,6 +9,10 @@ parameters:
 - name: azureApp
   displayName: Azure App to deploy to
   type: string
+- name: azureSlotName 
+  displayName: Slot to deploy to, leave empty for no-slot
+  type: string
+  default: ' ' # Workaround to allow 'empty' values
 
 trigger: none
 
@@ -62,6 +66,7 @@ stages:
                 -Dtestapp.azure.auth.tenant=$(TESTAPP_AZURE_AUTH_TENANT) 
                 -Dtestapp.azure.auth.key=$(TESTAPP_AZURE_AUTH_KEY) 
                 -Dtestapp.azure.appName=${{ parameters.azureApp }}
+                -Dtestapp.azure.slotName=${{ parameters.azureSlotName }}
                 -Dtestapp.azure.war.dir=$(System.ArtifactsDirectory) 
                 -Dtestapp.azure.war.filesPattern=*.war
                 '
