@@ -32,10 +32,10 @@ stages:
     
 - stage: Deploy
   displayName: Manual Deploy
+  dependsOn: WelcomePlaceholder    
   jobs:
   - deployment: ManualDeploy
     displayName: Manually Deploy Web App
-    dependsOn: WelcomePlaceholder    
     workspace:
       clean: all
     environment: web-staging
