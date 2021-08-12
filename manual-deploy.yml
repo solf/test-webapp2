@@ -16,10 +16,19 @@ pool: Default # Use my own runners
 #pool:
 #  vmImage: ubuntu-latest
 
+variables:
+-group: StagingVariables
+
 stages:
 - stage: Deploy
   displayName: Manual Deploy
   jobs:
+  - job: DemoJob
+    workspace:
+      clean: all
+    steps:
+    - script: echo Blah
+    
   - deployment: ManualDeploy
     workspace:
       clean: all
